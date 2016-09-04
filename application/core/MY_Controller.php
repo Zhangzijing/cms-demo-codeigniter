@@ -39,7 +39,12 @@ class Admin_Controller extends MY_Controller
       //重定向至登录页
       redirect('admin/user/login','refresh');
     }
-    $this->data['current_user'] = $this->ion_auth->user()
+    $this->data['current_user'] = $this->ion_auth->user()->row();
+    $this->data['current_user_menu'] = '';
+    if ($this->ion_auth->in_group('admin')) 
+    {
+      $this->data['current_user_menu'] = $this->load->view('templates/_parts/user_menu_admin_view.php', NULL, TRUE);
+    }
     //设置标题
     $this->data['page_title'] = 'CI App - Dashboard';
   }
